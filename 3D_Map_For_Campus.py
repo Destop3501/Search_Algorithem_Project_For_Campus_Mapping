@@ -8,9 +8,9 @@ class FlatMap(ShowBase):
         
         # --- CAMERA SETUP ---
         self.disableMouse()
-        # Wide top-down view centered on the full campus including left side (ME dept)
-        self.camera.setPos(5, -80, 70)
-        self.camera.lookAt(5, 15, 0)
+        # Wide top-down view to show full campus: ME dept (X=-36) to IT building (X=70)
+        self.camera.setPos(17, -110, 95)
+        self.camera.lookAt(17, 20, 0)
         # --------------------
 
         self.setBackgroundColor(1, 1, 1, 1)
@@ -104,25 +104,49 @@ class FlatMap(ShowBase):
             "MF_Stare_Case_Ground_Floor":  {"pos": (32,  8, G2), "connections": ["MF_Stare_Case_Floor_1", "Deseption_Hall"],           "size": (0.8, 0.8, 0.8), "model": "box"},
 
             # === IT FACULTY AREA ===
-            "Path_10":                     {"pos": (38, 34, G),  "connections": ["Path_7"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Faculty_of_IT":               {"pos": (38, 28, G),  "connections": ["Path_10", "Path_9",
+            "Path_10":                     {"pos": (48, 34, G),  "connections": ["Path_7"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Faculty_of_IT":               {"pos": (54, 28, G),  "connections": ["Path_10", "Path_9",
                                                                                "IT_Lecture_Hall_1"],                                    "size": (0.8, 0.8, 0.8), "model": "box"},
 
             # === GROUND FLOOR — IT BUILDING ===
-            "IT_Lecture_Hall_1":           {"pos": (46, 28, G),  "connections": ["Faculty_of_IT", "IT_Lecture_Hall_2"],                 "size": (0.6, 0.6, 0.6), "model": "box"},
-            "IT_Lecture_Hall_2":           {"pos": (46, 22, G),  "connections": ["IT_Lecture_Hall_1", "IT_Stare_Case_Ground_Floor"],    "size": (0.8, 0.8, 0.8), "model": "box"},
-            "IT_Stare_Case_Ground_Floor":  {"pos": (54, 22, G),  "connections": ["IT_Lecture_Hall_2", "IT_Stare_Case_Floor_1"],         "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_Lecture_Hall_1":           {"pos": (62, 28, G),  "connections": ["Faculty_of_IT", "IT_Lecture_Hall_2"],                 "size": (0.6, 0.6, 0.6), "model": "box"},
+            "IT_Lecture_Hall_2":           {"pos": (62, 22, G),  "connections": ["IT_Lecture_Hall_1", "IT_Stare_Case_Ground_Floor",
+                                                                                   "IT_G_Lecture_Hall_3"],                               "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_G_Lecture_Hall_3":         {"pos": (56, 22, G),  "connections": ["IT_Lecture_Hall_2", "IT_G_Lecture_Hall_4"],           "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_G_Lecture_Hall_4":         {"pos": (56, 16, G),  "connections": ["IT_G_Lecture_Hall_3", "IT_G_Lab_1"],                  "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_G_Lab_1":                  {"pos": (56, 10, G),  "connections": ["IT_G_Lecture_Hall_4", "IT_G_Lab_2"],                  "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_G_Lab_2":                  {"pos": (50, 10, G),  "connections": ["IT_G_Lab_1", "IT_G_Lab_3"],                           "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_G_Lab_3":                  {"pos": (50, 16, G),  "connections": ["IT_G_Lab_2", "IT_G_Lecture_Hall_5"],                  "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_G_Lecture_Hall_5":         {"pos": (50, 22, G),  "connections": ["IT_G_Lab_3", "IT_G_Lecture_Hall_6"],                  "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_G_Lecture_Hall_6":         {"pos": (44, 22, G),  "connections": ["IT_G_Lecture_Hall_5"],                                "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_Stare_Case_Ground_Floor":  {"pos": (70, 22, G),  "connections": ["IT_Lecture_Hall_2", "IT_Stare_Case_Floor_1"],         "size": (0.8, 0.8, 0.8), "model": "box"},
 
             # === 1ST FLOOR — IT BUILDING ===
-            "IT_Stare_Case_Floor_1":       {"pos": (54, 22, F1), "connections": ["IT_Stare_Case_Ground_Floor", "IT_Stare_Case_Floor_2",
-                                                                               "IT_Lab_1"],                                             "size": (0.6, 0.6, 0.6), "model": "box"},
-            "IT_Lab_1":                    {"pos": (46, 22, F1), "connections": ["IT_Stare_Case_Floor_1"],                              "size": (0.8, 0.8, 0.8), "model": "box"},
-            "IT_Lecture_Hall_3":           {"pos": (46, 28, F1), "connections": ["IT_Lab_1"],                                           "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_Stare_Case_Floor_1":       {"pos": (70, 22, F1), "connections": ["IT_Stare_Case_Ground_Floor", "IT_Stare_Case_Floor_2",
+                                                                                   "IT_Lab_1"],                                          "size": (0.6, 0.6, 0.6), "model": "box"},
+            "IT_Lab_1":                    {"pos": (62, 22, F1), "connections": ["IT_Stare_Case_Floor_1", "IT_Lecture_Hall_3",
+                                                                                   "IT_F1_Lab_2"],                                       "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_F1_Lab_2":                 {"pos": (56, 22, F1), "connections": ["IT_Lab_1", "IT_F1_Lab_3"],                           "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_F1_Lab_3":                 {"pos": (56, 16, F1), "connections": ["IT_F1_Lab_2", "IT_F1_Lecture_Hall_7"],               "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_F1_Lecture_Hall_7":        {"pos": (56, 10, F1), "connections": ["IT_F1_Lab_3", "IT_F1_Lab_4"],                        "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_F1_Lab_4":                 {"pos": (50, 10, F1), "connections": ["IT_F1_Lecture_Hall_7", "IT_F1_Lab_5"],               "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_F1_Lab_5":                 {"pos": (50, 16, F1), "connections": ["IT_F1_Lab_4", "IT_F1_Lecture_Hall_8"],               "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_F1_Lecture_Hall_8":        {"pos": (50, 22, F1), "connections": ["IT_F1_Lab_5", "IT_F1_Lecture_Hall_9"],               "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_F1_Lecture_Hall_9":        {"pos": (44, 22, F1), "connections": ["IT_F1_Lecture_Hall_8"],                              "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_Lecture_Hall_3":           {"pos": (62, 28, F1), "connections": ["IT_Lab_1"],                                           "size": (0.8, 0.8, 0.8), "model": "box"},
 
             # === 2ND FLOOR — IT BUILDING ===
-            "IT_Stare_Case_Floor_2":       {"pos": (54, 22, F2), "connections": ["IT_Stare_Case_Floor_1", "IT_Lab_2"],                  "size": (0.6, 0.6, 0.6), "model": "box"},
-            "IT_Lab_2":                    {"pos": (46, 22, F2), "connections": ["IT_Stare_Case_Floor_2"],                              "size": (0.8, 0.8, 0.8), "model": "box"},
-            "IT_Lecture_Hall_4":           {"pos": (46, 28, F2), "connections": ["IT_Lab_2"],                                          "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_Stare_Case_Floor_2":       {"pos": (70, 22, F2), "connections": ["IT_Stare_Case_Floor_1", "IT_Lab_2"],                  "size": (0.6, 0.6, 0.6), "model": "box"},
+            "IT_Lab_2":                    {"pos": (62, 22, F2), "connections": ["IT_Stare_Case_Floor_2", "IT_Lecture_Hall_4",
+                                                                                   "IT_F2_Lab_6"],                                       "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_F2_Lab_6":                 {"pos": (56, 22, F2), "connections": ["IT_Lab_2", "IT_F2_Lab_7"],                           "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_F2_Lab_7":                 {"pos": (56, 16, F2), "connections": ["IT_F2_Lab_6", "IT_F2_Lecture_Hall_10"],              "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_F2_Lecture_Hall_10":       {"pos": (56, 10, F2), "connections": ["IT_F2_Lab_7", "IT_F2_Lab_8"],                        "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_F2_Lab_8":                 {"pos": (50, 10, F2), "connections": ["IT_F2_Lecture_Hall_10", "IT_F2_Lab_9"],              "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_F2_Lab_9":                 {"pos": (50, 16, F2), "connections": ["IT_F2_Lab_8", "IT_F2_Lecture_Hall_11"],              "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_F2_Lecture_Hall_11":       {"pos": (50, 22, F2), "connections": ["IT_F2_Lab_9", "IT_F2_Lecture_Hall_12"],              "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_F2_Lecture_Hall_12":       {"pos": (44, 22, F2), "connections": ["IT_F2_Lecture_Hall_11"],                             "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_Lecture_Hall_4":           {"pos": (62, 28, F2), "connections": ["IT_Lab_2"],                                          "size": (0.8, 0.8, 0.8), "model": "box"},
         }
 
         # 2. Visually create the nodes
