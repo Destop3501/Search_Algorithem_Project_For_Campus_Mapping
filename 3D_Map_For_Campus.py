@@ -7,67 +7,102 @@ class FlatMap(ShowBase):
         super().__init__()
         
         # --- CAMERA SETUP ---
-        # 1. Disable the default mouse camera control so we can manually position it
-        self.disableMouse() 
-        
-        # 2. Move the camera back (Y=-20) and up into the sky (Z=15)
-        self.camera.setPos(5, -20, 15)
-        
-        # 3. Tell the camera to look down at the center of your map (X=5, Y=5)
-        self.camera.lookAt(5, 5, 0)
+        self.disableMouse()
+        # Wide top-down view to see the full campus
+        self.camera.setPos(25, -60, 50)
+        self.camera.lookAt(25, 20, 0)
         # --------------------
 
         self.setBackgroundColor(1, 1, 1, 1)
 
-        # 1. Store your graph data
-        self.graph = {
-            "Entering_Gate":                  {"pos": (0, 0, 0),     "connections": ["Path_1"],                                             "size": (0.5, 0.5, 0.5), "model": "box"},
-            "Path_1":                         {"pos": (0, 2, 0),     "connections": ["Entering_Gate", "Main_Divition_buildings", "Path_2"], "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Main_Divition_buildings":        {"pos": (10, 2, 0),    "connections": ["Path_1"],                                             "size": (0.5, 0.5, 0.5), "model": "box"},
-            
-            "Path_2":                         {"pos": (0, 6, 0),     "connections": ["Path_1"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Goda_Canteen":                   {"pos": (5, 6, 0.5),   "connections": ["Path_2"],                                             "size": (0.5, 0.5, 0.5), "model": "box"},
-            "Goda_Uda_Canteen":               {"pos": (5, 6, 1),     "connections": ["Goda_Canteen"],                                       "size": (0.5, 0.5, 0.5), "model": "box"},
-            "Gym":                            {"pos": (5, 6, 1.5),   "connections": ["Goda_Uda_Canteen"],                                   "size": (0.5, 0.5, 0.5), "model": "box"},
+        # Floor height separation: Ground=0, Floor1=5, Floor2=10
+        G  = 0    # Ground floor
+        F1 = 5    # 1st floor
+        F2 = 10   # 2nd floor
 
-            "Path_3":                         {"pos": (0, 8, 0),     "connections": ["Path_2"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Path_4":                         {"pos": (10, 8, 0),     "connections": ["Path_3"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Path_5":                         {"pos": (10, 6, 0),     "connections": ["Path_4"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Path_6":                         {"pos": (10, 10, 0),     "connections": ["Path_4"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Path_7":                         {"pos": (12, 10, 0),     "connections": ["Path_6"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Path_8":                         {"pos": (12, 7, 0),     "connections": ["Path_7"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Path_9":                         {"pos": (14, 7, 0),     "connections": ["Path_8"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Path_10":                        {"pos": (15, 10, 0),     "connections": ["Path_7"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
+        # Graph data — spread out on a larger grid so labels don't overlap
+        self.graph = {
+            # === ENTRANCE ===
+            "Entering_Gate":            {"pos": (0,  0,  G),  "connections": ["Path_1"],                                             "size": (0.8, 0.8, 0.8), "model": "box"},
+            "Path_1":                   {"pos": (0,  6,  G),  "connections": ["Entering_Gate", "Main_Divition_buildings", "Path_2"], "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Main_Divition_buildings":  {"pos": (12, 6,  G),  "connections": ["Path_1"],                                             "size": (0.8, 0.8, 0.8), "model": "box"},
+
+            # === CANTEEN / GYM AREA ===
+            "Path_2":                   {"pos": (0,  12, G),  "connections": ["Path_1", "Path_3"],                                   "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Goda_Canteen":             {"pos": (8,  12, G),  "connections": ["Path_2"],                                             "size": (0.8, 0.8, 0.8), "model": "box"},
+            "Goda_Uda_Canteen":         {"pos": (8,  16, F1),  "connections": ["Goda_Canteen"],                                       "size": (0.8, 0.8, 0.8), "model": "box"},
+            "Gym":                      {"pos": (8,  20, F2),  "connections": ["Goda_Uda_Canteen"],                                   "size": (0.8, 0.8, 0.8), "model": "box"},
+
+            # === MAIN PATHS ===
+            "Path_3":                   {"pos": (0,  20, G),  "connections": ["Path_2"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Path_4":                   {"pos": (12, 20, G),  "connections": ["Path_3", "Path_5", "Path_6"],                        "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Path_5":                   {"pos": (12, 10, G),  "connections": ["Path_4"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Path_6":                   {"pos": (12, 26, G),  "connections": ["Path_4", "Path_7"],                                   "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Path_7":                   {"pos": (20, 26, G),  "connections": ["Path_6", "Path_8", "Path_10"],                       "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Path_8":                   {"pos": (20, 18, G),  "connections": ["Path_7", "Path_9"],                                   "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Path_9":                   {"pos": (28, 18, G),  "connections": ["Path_8", "Medical_Faculty"],                         "size": (0.5, 0.5, 0.5), "model": "circle"},
+
+            # === MEDICAL FACULTY ===
+            "Medical_Faculty":          {"pos": (28, 14, G),  "connections": ["Path_9"],                                             "size": (0.8, 0.8, 0.8), "model": "box"},
+
+            # === IT FACULTY AREA ===
+            "Path_10":                  {"pos": (28, 26, G),  "connections": ["Path_7"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Faculty_of_IT":            {"pos": (28, 22, G),  "connections": ["Path_10", "Path_9",
+                                                                               "Lecture_Hall_1"],                                    "size": (0.8, 0.8, 0.8), "model": "box"},
+
+            # === GROUND FLOOR — IT BUILDING ===
+            "Lecture_Hall_1":           {"pos": (34, 22, G),  "connections": ["Faculty_of_IT", "Lecture_Hall_2"],                    "size": (0.6, 0.6, 0.6), "model": "box"},
+            "Lecture_Hall_2":           {"pos": (34, 18, G),  "connections": ["Lecture_Hall_1", "Stare_Case_Ground_Floor"],          "size": (0.8, 0.8, 0.8), "model": "box"},
+            "Stare_Case_Ground_Floor":  {"pos": (40, 18, G),  "connections": ["Lecture_Hall_2", "Stare_Case_Floor_1"],               "size": (0.8, 0.8, 0.8), "model": "box"},
+
+            # === 1ST FLOOR — IT BUILDING ===
+            "Stare_Case_Floor_1":       {"pos": (40, 18, F1), "connections": ["Stare_Case_Ground_Floor", "Stare_Case_Floor_2",
+                                                                               "Lab_1"],                                             "size": (0.6, 0.6, 0.6), "model": "box"},
+            "Lab_1":                    {"pos": (34, 18, F1), "connections": ["Stare_Case_Floor_1"],                                 "size": (0.8, 0.8, 0.8), "model": "box"},
+            "Lecture_Hall_3":           {"pos": (34, 22, F1), "connections": ["Lab_1"],                                              "size": (0.8, 0.8, 0.8), "model": "box"},
+
+            # === 2ND FLOOR — IT BUILDING ===
+            "Stare_Case_Floor_2":       {"pos": (40, 18, F2), "connections": ["Stare_Case_Floor_1", "Lab_2"],                        "size": (0.6, 0.6, 0.6), "model": "box"},
+            "Lab_2":                    {"pos": (34, 18, F2), "connections": ["Stare_Case_Floor_2"],                                 "size": (0.8, 0.8, 0.8), "model": "box"},
+            "Lecture_Hall_4":           {"pos": (34, 22, F2), "connections": ["Lab_2"],                                              "size": (0.8, 0.8, 0.8), "model": "box"},
         }
-        
+
         # 2. Visually create the nodes
         self.visual_nodes = {}
         for name, data in self.graph.items():
             model_name = data['model']
             if model_name == 'circle':
-                node = self.make_circle(pos=data["pos"], radius=0.5, color=(0, 0, 0, 1))
+                node = self.make_circle(pos=data["pos"], radius=0.8, color=(0.2, 0.2, 0.8, 1))
             else:
-                node = self.loader.loadModel(f"models/{model_name}")
+                node = self.loader.loadModel("models/box")
                 node.setPos(data['pos'])
                 node.setScale(data["size"])
-                node.setColor(0, 0, 0, 1)
+                # Color by floor: ground=dark grey, floor1=blue, floor2=green
+                z = data["pos"][2]
+                if z == 0:
+                    node.setColor(0.2, 0.2, 0.2, 1)
+                elif z == 5:
+                    node.setColor(0.1, 0.3, 0.8, 1)
+                else:
+                    node.setColor(0.1, 0.7, 0.2, 1)
 
             node.reparentTo(self.render)
             self.visual_nodes[name] = node
 
+            # Label
             text = TextNode(name)
             text.setText(name.replace("_", " "))
             text.setTextColor(0, 0, 0, 1)
             text.setAlign(TextNode.ACenter)
             text_path = self.render.attachNewNode(text)
-            text_path.setPos(data["pos"][0], data["pos"][1], data["pos"][2] + 1.0)
-            text_path.setScale(0.8)
+            text_path.setPos(data["pos"][0], data["pos"][1], data["pos"][2] + 1.5)
+            text_path.setScale(0.7)
             text_path.setBillboardPointEye()
-            
-        # 3. Draw the edges (Hallways/Paths) dynamically from connections
+
+        # 3. Draw edges dynamically from connections
         lines = LineSegs()
-        lines.setThickness(3.0)
-        lines.setColor(1, 1, 0, 1)  # Yellow lines
+        lines.setThickness(2.5)
+        lines.setColor(1, 0.6, 0, 1)  # Orange lines
 
         drawn = set()
         for name, data in self.graph.items():
