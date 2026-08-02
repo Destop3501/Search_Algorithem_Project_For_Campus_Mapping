@@ -19,52 +19,69 @@ class FlatMap(ShowBase):
         G  = 0    # Ground floor
         F1 = 5    # 1st floor
         F2 = 10   # 2nd floor
+        G1 = -5
+        G2 = -10
 
         # Graph data — spread out on a larger grid so labels don't overlap
         self.graph = {
             # === ENTRANCE ===
-            "Entering_Gate":            {"pos": (0,  0,  G),  "connections": ["Path_1"],                                             "size": (0.8, 0.8, 0.8), "model": "box"},
-            "Path_1":                   {"pos": (0,  6,  G),  "connections": ["Entering_Gate", "Main_Divition_buildings", "Path_2"], "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Main_Divition_buildings":  {"pos": (12, 6,  G),  "connections": ["Path_1"],                                             "size": (0.8, 0.8, 0.8), "model": "box"},
+            "Entering_Gate":               {"pos": (0,  0,  G),  "connections": ["Path_1"],                                             "size": (0.8, 0.8, 0.8), "model": "box"},
+            "Path_1":                      {"pos": (0,  6,  G),  "connections": ["Entering_Gate", "Main_Divition_buildings", "Path_2"], "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Main_Divition_buildings":     {"pos": (12, 6,  G),  "connections": ["Path_1"],                                             "size": (0.8, 0.8, 0.8), "model": "box"},
 
             # === CANTEEN / GYM AREA ===
-            "Path_2":                   {"pos": (0,  12, G),  "connections": ["Path_1", "Path_3"],                                   "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Goda_Canteen":             {"pos": (8,  12, G),  "connections": ["Path_2"],                                             "size": (0.8, 0.8, 0.8), "model": "box"},
-            "Goda_Uda_Canteen":         {"pos": (8,  16, F1),  "connections": ["Goda_Canteen"],                                       "size": (0.8, 0.8, 0.8), "model": "box"},
-            "Gym":                      {"pos": (8,  20, F2),  "connections": ["Goda_Uda_Canteen"],                                   "size": (0.8, 0.8, 0.8), "model": "box"},
+            "Path_2":                      {"pos": (0,  12, G),  "connections": ["Path_1", "Path_3"],                                   "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Goda_Canteen":                {"pos": (8,  12, G),  "connections": ["Path_2"],                                             "size": (0.8, 0.8, 0.8), "model": "box"},
+            "Goda_Uda_Canteen":            {"pos": (8,  16, F1),  "connections": ["Goda_Canteen"],                                      "size": (0.8, 0.8, 0.8), "model": "box"},
+            "Gym":                         {"pos": (8,  20, F2),  "connections": ["Goda_Uda_Canteen"],                                  "size": (0.8, 0.8, 0.8), "model": "box"},
 
             # === MAIN PATHS ===
-            "Path_3":                   {"pos": (0,  20, G),  "connections": ["Path_2"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Path_4":                   {"pos": (12, 20, G),  "connections": ["Path_3", "Path_5", "Path_6"],                        "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Path_5":                   {"pos": (12, 10, G),  "connections": ["Path_4"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Path_6":                   {"pos": (12, 26, G),  "connections": ["Path_4", "Path_7"],                                   "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Path_7":                   {"pos": (20, 26, G),  "connections": ["Path_6", "Path_8", "Path_10"],                       "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Path_8":                   {"pos": (20, 18, G),  "connections": ["Path_7", "Path_9"],                                   "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Path_9":                   {"pos": (28, 18, G),  "connections": ["Path_8", "Medical_Faculty"],                         "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Path_3":                      {"pos": (0,  20, G),  "connections": ["Path_2"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Path_4":                      {"pos": (12, 20, G),  "connections": ["Path_3", "Path_5", "Path_6"],                         "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Path_5":                      {"pos": (12, 10, G),  "connections": ["Path_4"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Path_6":                      {"pos": (12, 26, G),  "connections": ["Path_4", "Path_7"],                                   "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Path_7":                      {"pos": (20, 26, G),  "connections": ["Path_6", "Path_8", "Path_10"],                        "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Path_8":                      {"pos": (20, 18, G),  "connections": ["Path_7", "Path_9"],                                   "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Path_9":                      {"pos": (24, 18, G),  "connections": ["Path_8", "Medical_Faculty"],                          "size": (0.5, 0.5, 0.5), "model": "circle"},
 
             # === MEDICAL FACULTY ===
-            "Medical_Faculty":          {"pos": (28, 14, G),  "connections": ["Path_9"],                                             "size": (0.8, 0.8, 0.8), "model": "box"},
+            "Medical_Faculty":             {"pos": (24, 14, G),  "connections": ["Path_9"],                                             "size": (0.8, 0.8, 0.8), "model": "box"},
+            "Path_11":                     {"pos": (24, 10, G),  "connections": ["Medical_Faculty", "MF_Dean_Office",
+                                                                                    "MF_Meating_Room", "MF_Stare_Case_Floor_2"],        "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "MF_Dean_Office":              {"pos": (20, 10, G),  "connections": ["Path_11"],                                            "size": (0.8, 0.8, 0.8), "model": "box"},
+            "MF_Meating_Room":             {"pos": (28, 10, G),  "connections": ["Path_11"],                                            "size": (0.8, 0.8, 0.8), "model": "box"},
+            "MF_Stare_Case_Floor_2":       {"pos": (24, 6, G),  "connections": ["Path_11", "MF_Stare_Case_Floor_1"],                    "size": (0.8, 0.8, 0.8), "model": "box"},
+            
+            "Path_12":                     {"pos": (24, 10, G1),  "connections": ["MF_Physiology_Lab", "MF_Skill_Lab", 
+                                                                                    "MF_Stare_Case_Floor_1"],                           "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "MF_Physiology_Lab":           {"pos": (20, 10, G1),  "connections": ["Path_12"],                                           "size": (0.8, 0.8, 0.8), "model": "box"},
+            "MF_Skill_Lab":                {"pos": (28, 10, G1),  "connections": ["Path_12"],                                           "size": (0.8, 0.8, 0.8), "model": "box"},
+            "MF_Stare_Case_Floor_1":       {"pos": (24, 6, G1),  "connections": ["MF_Stare_Case_Floor_2", "Path_12",
+                                                                                    "MF_Stare_Case_Ground_Floor"],                      "size": (0.8, 0.8, 0.8), "model": "box"},
+            
+            "Deseption_Hall":              {"pos": (24, 10, G2),  "connections": ["MF_Stare_Case_Ground_Floor"],                        "size": (0.8, 0.8, 0.8), "model": "box"},
+            "MF_Stare_Case_Ground_Floor":  {"pos": (24, 6, G2),  "connections": ["MF_Stare_Case_Floor_1", "Deseption_Hall"],            "size": (0.8, 0.8, 0.8), "model": "box"},
 
             # === IT FACULTY AREA ===
-            "Path_10":                  {"pos": (28, 26, G),  "connections": ["Path_7"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
-            "Faculty_of_IT":            {"pos": (28, 22, G),  "connections": ["Path_10", "Path_9",
-                                                                               "Lecture_Hall_1"],                                    "size": (0.8, 0.8, 0.8), "model": "box"},
+            "Path_10":                     {"pos": (28, 26, G),  "connections": ["Path_7"],                                             "size": (0.5, 0.5, 0.5), "model": "circle"},
+            "Faculty_of_IT":               {"pos": (28, 22, G),  "connections": ["Path_10", "Path_9",
+                                                                               "IT_Lecture_Hall_1"],                                    "size": (0.8, 0.8, 0.8), "model": "box"},
 
             # === GROUND FLOOR — IT BUILDING ===
-            "Lecture_Hall_1":           {"pos": (34, 22, G),  "connections": ["Faculty_of_IT", "Lecture_Hall_2"],                    "size": (0.6, 0.6, 0.6), "model": "box"},
-            "Lecture_Hall_2":           {"pos": (34, 18, G),  "connections": ["Lecture_Hall_1", "Stare_Case_Ground_Floor"],          "size": (0.8, 0.8, 0.8), "model": "box"},
-            "Stare_Case_Ground_Floor":  {"pos": (40, 18, G),  "connections": ["Lecture_Hall_2", "Stare_Case_Floor_1"],               "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_Lecture_Hall_1":           {"pos": (34, 22, G),  "connections": ["Faculty_of_IT", "IT_Lecture_Hall_2"],                 "size": (0.6, 0.6, 0.6), "model": "box"},
+            "IT_Lecture_Hall_2":           {"pos": (34, 18, G),  "connections": ["IT_Lecture_Hall_1", "IT_Stare_Case_Ground_Floor"],    "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_Stare_Case_Ground_Floor":  {"pos": (40, 18, G),  "connections": ["IT_Lecture_Hall_2", "IT_Stare_Case_Floor_1"],         "size": (0.8, 0.8, 0.8), "model": "box"},
 
             # === 1ST FLOOR — IT BUILDING ===
-            "Stare_Case_Floor_1":       {"pos": (40, 18, F1), "connections": ["Stare_Case_Ground_Floor", "Stare_Case_Floor_2",
-                                                                               "Lab_1"],                                             "size": (0.6, 0.6, 0.6), "model": "box"},
-            "Lab_1":                    {"pos": (34, 18, F1), "connections": ["Stare_Case_Floor_1"],                                 "size": (0.8, 0.8, 0.8), "model": "box"},
-            "Lecture_Hall_3":           {"pos": (34, 22, F1), "connections": ["Lab_1"],                                              "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_Stare_Case_Floor_1":       {"pos": (40, 18, F1), "connections": ["IT_Stare_Case_Ground_Floor", "IT_Stare_Case_Floor_2",
+                                                                               "IT_Lab_1"],                                             "size": (0.6, 0.6, 0.6), "model": "box"},
+            "IT_Lab_1":                    {"pos": (34, 18, F1), "connections": ["IT_Stare_Case_Floor_1"],                              "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_Lecture_Hall_3":           {"pos": (34, 22, F1), "connections": ["IT_Lab_1"],                                           "size": (0.8, 0.8, 0.8), "model": "box"},
 
             # === 2ND FLOOR — IT BUILDING ===
-            "Stare_Case_Floor_2":       {"pos": (40, 18, F2), "connections": ["Stare_Case_Floor_1", "Lab_2"],                        "size": (0.6, 0.6, 0.6), "model": "box"},
-            "Lab_2":                    {"pos": (34, 18, F2), "connections": ["Stare_Case_Floor_2"],                                 "size": (0.8, 0.8, 0.8), "model": "box"},
-            "Lecture_Hall_4":           {"pos": (34, 22, F2), "connections": ["Lab_2"],                                              "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_Stare_Case_Floor_2":       {"pos": (40, 18, F2), "connections": ["IT_Stare_Case_Floor_1", "IT_Lab_2"],                  "size": (0.6, 0.6, 0.6), "model": "box"},
+            "IT_Lab_2":                    {"pos": (34, 18, F2), "connections": ["IT_Stare_Case_Floor_2"],                              "size": (0.8, 0.8, 0.8), "model": "box"},
+            "IT_Lecture_Hall_4":           {"pos": (34, 22, F2), "connections": ["IT_Lab_2"],                                          "size": (0.8, 0.8, 0.8), "model": "box"},
         }
 
         # 2. Visually create the nodes
